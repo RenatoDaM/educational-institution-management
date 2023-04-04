@@ -49,4 +49,5 @@ public class EducationalContainModel {
     public void setStudent(StudentModel student) {
         this.student = student;
     }
+
 }

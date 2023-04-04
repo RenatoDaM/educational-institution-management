@@ -38,4 +38,12 @@ public class EducationalUnitModel {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public List<EducationalContainModel> getEducationalContainModelList() {
+        return educationalContainModelList;
+    }
+
+    public void setEducationalContainModelList(List<EducationalContainModel> educationalContainModelList) {
+        this.educationalContainModelList = educationalContainModelList;
+    }
 }

@@ -12,6 +12,7 @@ public class ProfessorModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String name;
+    @Column(unique = true)
     String cpf;
 
     @OrderColumn(name = "order_index")
@@ -47,5 +48,21 @@ public class ProfessorModel {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public List<CourseModel> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseModel> courses) {
+        this.courses = courses;
+    }
+
+    public List<EducationalContainModel> getEducationalContainModelList() {
+        return educationalContainModelList;
+    }
+
+    public void setEducationalContainModelList(List<EducationalContainModel> educationalContainModelList) {
+        this.educationalContainModelList = educationalContainModelList;
     }
 }

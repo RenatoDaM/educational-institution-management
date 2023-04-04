@@ -41,4 +41,5 @@ public class CurriculumModel {
     public void setCourseModelList(List<CourseModel> courseModelList) {
         this.courseModelList = courseModelList;
     }
+
 }

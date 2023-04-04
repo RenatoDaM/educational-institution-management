@@ -61,4 +61,12 @@ public class CourseModel {
     public void setCourseHistory(CourseHistoryModel courseHistory) {
         this.courseHistory = courseHistory;
     }
+
+    public List<ProfessorModel> getProfessorModels() {
+        return professorModels;
+    }
+
+    public void setProfessorModels(List<ProfessorModel> professorModels) {
+        this.professorModels = professorModels;
+    }
 }

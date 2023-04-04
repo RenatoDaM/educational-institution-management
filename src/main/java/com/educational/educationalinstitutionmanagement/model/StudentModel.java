@@ -13,7 +13,9 @@ public class StudentModel {
     Integer id;
     String name;
     LocalDate birthDay;
+    @Column(unique = true)
     String cpf;
+    @Column(unique = true)
     String ra;
     @ManyToOne
     @JoinColumn(name = "enrollment_id")

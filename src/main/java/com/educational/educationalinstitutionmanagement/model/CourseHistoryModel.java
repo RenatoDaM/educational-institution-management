@@ -56,4 +56,6 @@ public class CourseHistoryModel {
     public void setGrade(Integer grade) {
         this.grade = grade;
     }
+
+
 }

@@ -39,4 +39,12 @@ public class EnrollmentModel {
     public void setDegree(String degree) {
         this.degree = degree;
     }
+
+    public List<StudentModel> getStudentModelList() {
+        return studentModelList;
+    }
+
+    public void setStudentModelList(List<StudentModel> studentModelList) {
+        this.studentModelList = studentModelList;
+    }
 }

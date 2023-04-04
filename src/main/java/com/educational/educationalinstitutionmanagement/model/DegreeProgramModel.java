@@ -28,4 +28,12 @@ public class DegreeProgramModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    public CurriculumModel getCurriculum() {
+        return curriculum;
+    }
+
+    public void setCurriculum(CurriculumModel curriculum) {
+        this.curriculum = curriculum;
+    }
 }
