@@ -5,10 +5,11 @@ import com.educational.educationalinstitutionmanagement.model.EducationalUnitMod
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
 import com.educational.educationalinstitutionmanagement.repository.EducationalContainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class EducationalContainService {
 
     @Autowired

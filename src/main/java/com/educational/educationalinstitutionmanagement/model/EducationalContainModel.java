@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class EducationalContainModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     @ManyToOne
     @JoinColumn(name = "professor_id")
     ProfessorModel professor;
@@ -18,11 +18,11 @@ public class EducationalContainModel {
     @JoinColumn(name = "student_id")
     StudentModel student;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

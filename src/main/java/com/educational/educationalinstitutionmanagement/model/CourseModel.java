@@ -9,7 +9,7 @@ import java.util.List;
 public class CourseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     String name;
     String description;
     @ManyToOne
@@ -22,11 +22,11 @@ public class CourseModel {
     @OneToOne(mappedBy = "course")
     CourseHistoryModel courseHistory;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

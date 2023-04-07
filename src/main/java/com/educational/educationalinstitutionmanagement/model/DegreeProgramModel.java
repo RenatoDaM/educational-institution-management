@@ -7,17 +7,17 @@ import jakarta.persistence.*;
 public class DegreeProgramModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     String name;
 
     @OneToOne(mappedBy = "degreeProgramModel")
     CurriculumModel curriculum;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

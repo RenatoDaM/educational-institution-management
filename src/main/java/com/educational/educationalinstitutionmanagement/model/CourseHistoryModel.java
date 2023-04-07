@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class CourseHistoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     @ManyToOne
     @JoinColumn(name = "student_id")
     StudentModel student;
@@ -17,11 +17,11 @@ public class CourseHistoryModel {
     Boolean approved;
     Integer grade;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

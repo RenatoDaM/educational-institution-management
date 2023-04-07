@@ -10,7 +10,7 @@ import java.util.List;
 public class StudentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     String name;
     LocalDate birthDay;
     @Column(unique = true)
@@ -29,11 +29,11 @@ public class StudentModel {
     @OneToMany(mappedBy = "student")
     List<EducationalContainModel> educationalContainStudent;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

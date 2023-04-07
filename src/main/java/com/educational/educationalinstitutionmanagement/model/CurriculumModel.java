@@ -9,7 +9,7 @@ import java.util.List;
 public class CurriculumModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
 
     @OneToOne
     @JoinColumn(name = "degree_program_id")
@@ -18,11 +18,11 @@ public class CurriculumModel {
     @OneToMany(mappedBy = "curriculum")
     List<CourseModel> courseModelList;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

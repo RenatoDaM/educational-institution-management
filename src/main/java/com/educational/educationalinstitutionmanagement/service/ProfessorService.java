@@ -3,10 +3,11 @@ package com.educational.educationalinstitutionmanagement.service;
 import com.educational.educationalinstitutionmanagement.model.ProfessorModel;
 import com.educational.educationalinstitutionmanagement.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ProfessorService {
     @Autowired
     private ProfessorRepository professorRepository;

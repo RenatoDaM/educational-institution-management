@@ -10,7 +10,7 @@ import java.util.List;
 public class ProfessorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     String name;
     @Column(unique = true)
     String cpf;
@@ -26,11 +26,11 @@ public class ProfessorModel {
     @OneToMany(mappedBy = "professor")
     List<EducationalContainModel> educationalContainModelList;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

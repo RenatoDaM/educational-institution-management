@@ -9,17 +9,17 @@ import java.util.List;
 public class EducationalUnitModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Long id;
     String state;
     String city;
     @OneToMany(mappedBy = "educationalUnit")
     List<EducationalContainModel> educationalContainModelList;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
