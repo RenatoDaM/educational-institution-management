@@ -16,8 +16,8 @@ public class EducationalUnitController {
     @Autowired
     EducationalUnitService educationalUnitService;
 
-    @PostMapping("/create/educational-unit")
-    ResponseEntity<EducationalUnitModel> createEducationalUnit(@RequestBody EducationalUnitModel educationalUnitModel) {
+    @PostMapping("/register/educational-unit")
+    ResponseEntity<EducationalUnitModel> registerEducationalUnit(@RequestBody EducationalUnitModel educationalUnitModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(educationalUnitService.save(educationalUnitModel));
     }
 
