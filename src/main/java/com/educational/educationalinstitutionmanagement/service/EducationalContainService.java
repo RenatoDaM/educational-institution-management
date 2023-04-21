@@ -19,13 +19,12 @@ public class EducationalContainService {
         EducationalContainModel educationalContainModel = new EducationalContainModel();
         educationalContainModel.setEducationalUnit(educationalUnitModel);
         educationalContainModel.setStudent(studentModel);
-        if (!educationalContainRepository.existsByEducationalUnit(educationalUnitModel)) {
+        if (!educationalContainRepository.existsByEducationalUnitAndStudent(educationalUnitModel, studentModel)) {
             educationalContainRepository.save(educationalContainModel);
-            //studentModel.getEducationalContainStudent().add(educationalContainModel); não sei se é necessário
+            studentModel.getEducationalContainStudent().add(educationalContainModel);
         } else {
             studentModel.getEducationalContainStudent().add(educationalContainModel);
         }
-
         return studentModel;
 
         // CÓDIGO EXEMPLO:

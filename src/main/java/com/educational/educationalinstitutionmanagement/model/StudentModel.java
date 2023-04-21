@@ -1,5 +1,6 @@
 package com.educational.educationalinstitutionmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class StudentModel {
     CurriculumModel curriculumModel;
 
     @OneToMany(mappedBy = "student")
+    @JsonIgnore
     List<EducationalContainModel> educationalContainStudent;
 
     public Long getId() {
