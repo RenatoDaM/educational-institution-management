@@ -1,6 +1,6 @@
 package com.educational.educationalinstitutionmanagement.service;
 
-import com.educational.educationalinstitutionmanagement.model.EducationalContainModel;
+import com.educational.educationalinstitutionmanagement.model.EducationalContainsStudentModel;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
 import com.educational.educationalinstitutionmanagement.repository.EducationalContainRepository;
@@ -16,14 +16,14 @@ public class EducationalContainService {
     private EducationalContainRepository educationalContainRepository;
 
     public StudentModel registerStudentInUnit(EducationalUnitModel educationalUnitModel, StudentModel studentModel) {
-        EducationalContainModel educationalContainModel = new EducationalContainModel();
-        educationalContainModel.setEducationalUnit(educationalUnitModel);
-        educationalContainModel.setStudent(studentModel);
+        EducationalContainsStudentModel educationalContainsStudentModel = new EducationalContainsStudentModel();
+        educationalContainsStudentModel.setEducationalUnit(educationalUnitModel);
+        educationalContainsStudentModel.setStudent(studentModel);
         if (!educationalContainRepository.existsByEducationalUnitAndStudent(educationalUnitModel, studentModel)) {
-            educationalContainRepository.save(educationalContainModel);
-            studentModel.getEducationalContainStudent().add(educationalContainModel);
+            educationalContainRepository.save(educationalContainsStudentModel);
+            studentModel.getEducationalContainStudent().add(educationalContainsStudentModel);
         } else {
-            studentModel.getEducationalContainStudent().add(educationalContainModel);
+            studentModel.getEducationalContainStudent().add(educationalContainsStudentModel);
         }
         return studentModel;
 
@@ -42,15 +42,15 @@ public class EducationalContainService {
     return studentRepository.save(student);*/
     }
 
-    public EducationalContainModel save(EducationalContainModel educationalContain) {
+    public EducationalContainsStudentModel save(EducationalContainsStudentModel educationalContain) {
         return educationalContainRepository.save(educationalContain);
     }
 
-    public Optional<EducationalContainModel> findById(Long id) {
+    public Optional<EducationalContainsStudentModel> findById(Long id) {
         return educationalContainRepository.findById(id);
     }
 
-    public List<EducationalContainModel> findAll() {
+    public List<EducationalContainsStudentModel> findAll() {
         return educationalContainRepository.findAll();
     }
 
@@ -58,7 +58,7 @@ public class EducationalContainService {
         educationalContainRepository.deleteById(id);
     }
 
-    public EducationalContainModel update(EducationalContainModel educationalContain) {
+    public EducationalContainsStudentModel update(EducationalContainsStudentModel educationalContain) {
         return educationalContainRepository.save(educationalContain);
     }
 }

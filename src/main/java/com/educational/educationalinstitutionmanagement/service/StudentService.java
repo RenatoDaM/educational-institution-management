@@ -1,16 +1,12 @@
 package com.educational.educationalinstitutionmanagement.service;
 
-import com.educational.educationalinstitutionmanagement.model.EducationalContainModel;
-import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
-import com.educational.educationalinstitutionmanagement.model.ProfessorModel;
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
-import com.educational.educationalinstitutionmanagement.repository.EducationalContainRepository;
 import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service

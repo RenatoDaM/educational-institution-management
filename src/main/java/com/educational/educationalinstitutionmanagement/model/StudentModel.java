@@ -29,7 +29,7 @@ public class StudentModel {
 
     @OneToMany(mappedBy = "student")
     @JsonIgnore
-    List<EducationalContainModel> educationalContainStudent;
+    List<EducationalContainsStudentModel> educationalContainStudent;
 
     public Long getId() {
         return id;
@@ -95,11 +95,11 @@ public class StudentModel {
         this.curriculumModel = curriculumModel;
     }
 
-    public List<EducationalContainModel> getEducationalContainStudent() {
+    public List<EducationalContainsStudentModel> getEducationalContainStudent() {
         return educationalContainStudent;
     }
 
-    public void setEducationalContainStudent(List<EducationalContainModel> educationalContainStudent) {
+    public void setEducationalContainStudent(List<EducationalContainsStudentModel> educationalContainStudent) {
         this.educationalContainStudent = educationalContainStudent;
     }
 }

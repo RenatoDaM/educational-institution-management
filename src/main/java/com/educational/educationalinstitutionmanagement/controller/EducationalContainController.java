@@ -1,8 +1,6 @@
 package com.educational.educationalinstitutionmanagement.controller;
 
-import com.educational.educationalinstitutionmanagement.model.EducationalContainModel;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
-import com.educational.educationalinstitutionmanagement.model.ProfessorModel;
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
 import com.educational.educationalinstitutionmanagement.service.EducationalContainService;
 import com.educational.educationalinstitutionmanagement.service.EducationalUnitService;

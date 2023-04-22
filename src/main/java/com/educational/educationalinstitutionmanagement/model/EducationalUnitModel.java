@@ -13,7 +13,7 @@ public class EducationalUnitModel {
     String state;
     String city;
     @OneToMany(mappedBy = "educationalUnit")
-    List<EducationalContainModel> educationalContainModelList;
+    List<EducationalContainsStudentModel> educationalContainsStudentModelList;
 
     public Long getId() {
         return id;
@@ -39,11 +39,11 @@ public class EducationalUnitModel {
         this.city = city;
     }
 
-    public List<EducationalContainModel> getEducationalContainModelList() {
-        return educationalContainModelList;
+    public List<EducationalContainsStudentModel> getEducationalContainModelList() {
+        return educationalContainsStudentModelList;
     }
 
-    public void setEducationalContainModelList(List<EducationalContainModel> educationalContainModelList) {
-        this.educationalContainModelList = educationalContainModelList;
+    public void setEducationalContainModelList(List<EducationalContainsStudentModel> educationalContainsStudentModelList) {
+        this.educationalContainsStudentModelList = educationalContainsStudentModelList;
     }
 }

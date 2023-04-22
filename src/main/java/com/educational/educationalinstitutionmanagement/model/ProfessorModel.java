@@ -2,7 +2,6 @@ package com.educational.educationalinstitutionmanagement.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,8 +22,8 @@ public class ProfessorModel {
     List<CourseModel> courses;
     // vai mapear por "courses"
 
-    @OneToMany(mappedBy = "professor")
-    List<EducationalContainModel> educationalContainModelList;
+    @ManyToMany(mappedBy = "educationalUnitModels")
+    List<EducationalContainsProfessorModel> educationalContainsProfessorModels;
 
     public Long getId() {
         return id;
@@ -58,11 +57,11 @@ public class ProfessorModel {
         this.courses = courses;
     }
 
-    public List<EducationalContainModel> getEducationalContainModelList() {
-        return educationalContainModelList;
+    public List<EducationalContainsProfessorModel> getEducationalContainsProfessors() {
+        return educationalContainsProfessorModels;
     }
 
-    public void setEducationalContainModelList(List<EducationalContainModel> educationalContainModelList) {
-        this.educationalContainModelList = educationalContainModelList;
+    public void setEducationalContainsProfessors(List<EducationalContainsProfessorModel> educationalContainsProfessorModels) {
+        this.educationalContainsProfessorModels = educationalContainsProfessorModels;
     }
 }
