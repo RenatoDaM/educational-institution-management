@@ -1,7 +1,6 @@
 package com.educational.educationalinstitutionmanagement.controller;
 
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
-import com.educational.educationalinstitutionmanagement.repository.EducationalContainRepository;
 import com.educational.educationalinstitutionmanagement.response.Response;
 import com.educational.educationalinstitutionmanagement.service.EducationalUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import java.util.Optional;
 public class EducationalUnitController {
     @Autowired
     EducationalUnitService educationalUnitService;
-    @Autowired
-    private EducationalContainRepository educationalContainRepository;
 
     @PostMapping("/register")
     ResponseEntity<EducationalUnitModel> registerEducationalUnit(@RequestBody EducationalUnitModel educationalUnitModel) {

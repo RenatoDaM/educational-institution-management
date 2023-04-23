@@ -3,12 +3,14 @@ package com.educational.educationalinstitutionmanagement.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "student")
-public class StudentModel {
+public class StudentModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -29,7 +31,7 @@ public class StudentModel {
 
     @OneToMany(mappedBy = "student")
     @JsonIgnore
-    List<EducationalContainsStudentModel> educationalContainStudent;
+    Set<EducationalContainsStudentModel> educationalUnits;
 
     public Long getId() {
         return id;
@@ -95,11 +97,11 @@ public class StudentModel {
         this.curriculumModel = curriculumModel;
     }
 
-    public List<EducationalContainsStudentModel> getEducationalContainStudent() {
-        return educationalContainStudent;
+    public Set<EducationalContainsStudentModel> getEducationalUnits() {
+        return educationalUnits;
     }
 
-    public void setEducationalContainStudent(List<EducationalContainsStudentModel> educationalContainStudent) {
-        this.educationalContainStudent = educationalContainStudent;
+    public void setEducationalUnits(Set<EducationalContainsStudentModel> educationalUnits) {
+        this.educationalUnits = educationalUnits;
     }
 }

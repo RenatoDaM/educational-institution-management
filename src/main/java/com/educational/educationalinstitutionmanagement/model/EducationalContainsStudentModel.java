@@ -1,29 +1,31 @@
 package com.educational.educationalinstitutionmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "educational_contains_student")
 public class EducationalContainsStudentModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @EmbeddedId
+    EducationalContainsStudentId id;
     @ManyToOne
+    @MapsId("educationalUnitId")
     @JoinColumn(name = "educational_unit_id")
-    EducationalUnitModel educationalUnit;
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    StudentModel student;
+    private EducationalUnitModel educationalUnit;
 
-    public Long getId() {
+    @ManyToOne
+    @MapsId("studentId")
+    @JoinColumn(name = "student_id")
+    private StudentModel student;
+    String state;
+
+    public EducationalContainsStudentId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(EducationalContainsStudentId id) {
         this.id = id;
     }
-
-
 
     public EducationalUnitModel getEducationalUnit() {
         return educationalUnit;
@@ -41,4 +43,11 @@ public class EducationalContainsStudentModel {
         this.student = student;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

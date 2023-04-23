@@ -2,6 +2,7 @@ package com.educational.educationalinstitutionmanagement.controller;
 
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
+import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
 import com.educational.educationalinstitutionmanagement.service.EducationalContainService;
 import com.educational.educationalinstitutionmanagement.service.EducationalUnitService;
 import com.educational.educationalinstitutionmanagement.service.StudentService;
@@ -10,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("v1/register-at-educational-unit")
-public class EducationalContainController {
+public class EducationalContainsController {
 
     @Autowired
     EducationalContainService educationalContainService;
@@ -21,16 +24,20 @@ public class EducationalContainController {
     StudentService studentService;
     @Autowired
     EducationalUnitService educationalUnitService;
+    @Autowired
+    private StudentRepository studentRepository;
 
     @PostMapping("/{educationalUnitId}/student/{studentId}")
     ResponseEntity<StudentModel> registerStudent(@PathVariable Long educationalUnitId, @PathVariable Long studentId) {
-        System.out.println("Hello");
         EducationalUnitModel educationalUnitModel = educationalUnitService.findById(educationalUnitId).get();
-        System.out.println("Hello 2");
         StudentModel studentModel = studentService.findById(studentId).get();
-        System.out.println("Hello 3");
         StudentModel studentResponse = educationalContainService.registerStudentInUnit(educationalUnitModel, studentModel);
-        System.out.println("uashduash");
         return ResponseEntity.status(HttpStatus.OK).body(studentResponse);
     }
+
+    @RequestMapping("/{educationalUnitId}/students")
+    ResponseEntity<List<StudentModel>> findStudentsByInstituition(@PathVariable Long educationalUnitId) {
+        return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findStudentsByInstituitionId(educationalUnitId));
+    }
+
 }

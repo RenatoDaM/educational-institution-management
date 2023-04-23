@@ -1,19 +1,24 @@
 package com.educational.educationalinstitutionmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "educational_unit")
-public class EducationalUnitModel {
+public class EducationalUnitModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    String name;
     String state;
     String city;
+
     @OneToMany(mappedBy = "educationalUnit")
-    List<EducationalContainsStudentModel> educationalContainsStudentModelList;
+    @JsonIgnore
+    Set<EducationalContainsStudentModel> students;
 
     public Long getId() {
         return id;
@@ -39,11 +44,19 @@ public class EducationalUnitModel {
         this.city = city;
     }
 
-    public List<EducationalContainsStudentModel> getEducationalContainModelList() {
-        return educationalContainsStudentModelList;
+    public Set<EducationalContainsStudentModel> getStudents() {
+        return students;
     }
 
-    public void setEducationalContainModelList(List<EducationalContainsStudentModel> educationalContainsStudentModelList) {
-        this.educationalContainsStudentModelList = educationalContainsStudentModelList;
+    public void setStudents(Set<EducationalContainsStudentModel> students) {
+        this.students = students;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

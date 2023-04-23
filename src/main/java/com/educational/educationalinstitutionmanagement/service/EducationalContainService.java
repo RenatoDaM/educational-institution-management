@@ -1,30 +1,38 @@
 package com.educational.educationalinstitutionmanagement.service;
 
+import com.educational.educationalinstitutionmanagement.model.EducationalContainsStudentId;
 import com.educational.educationalinstitutionmanagement.model.EducationalContainsStudentModel;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
-import com.educational.educationalinstitutionmanagement.repository.EducationalContainRepository;
+import com.educational.educationalinstitutionmanagement.repository.EducationalContainsStudentRepository;
+import com.educational.educationalinstitutionmanagement.repository.EducationalUnitRepository;
+import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class EducationalContainService {
 
     @Autowired
-    private EducationalContainRepository educationalContainRepository;
+    EducationalContainsStudentRepository educationalContainsStudentRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private EducationalUnitRepository educationalUnitRepository;
 
+    @Transactional
     public StudentModel registerStudentInUnit(EducationalUnitModel educationalUnitModel, StudentModel studentModel) {
-        EducationalContainsStudentModel educationalContainsStudentModel = new EducationalContainsStudentModel();
-        educationalContainsStudentModel.setEducationalUnit(educationalUnitModel);
+        var educationalContainsStudentModel = new EducationalContainsStudentModel();
         educationalContainsStudentModel.setStudent(studentModel);
-        if (!educationalContainRepository.existsByEducationalUnitAndStudent(educationalUnitModel, studentModel)) {
-            educationalContainRepository.save(educationalContainsStudentModel);
-            studentModel.getEducationalContainStudent().add(educationalContainsStudentModel);
-        } else {
-            studentModel.getEducationalContainStudent().add(educationalContainsStudentModel);
-        }
+        educationalContainsStudentModel.setEducationalUnit(educationalUnitModel);
+        var educationalContainsStudentId = new EducationalContainsStudentId();
+        educationalContainsStudentId.setEducationalUnitId(educationalUnitModel.getId());
+        educationalContainsStudentId.setStudentId(studentModel.getId());
+        educationalContainsStudentModel.setId(educationalContainsStudentId);
+        educationalContainsStudentRepository.save(educationalContainsStudentModel);
         return studentModel;
 
         // CÓDIGO EXEMPLO:
@@ -42,23 +50,9 @@ public class EducationalContainService {
     return studentRepository.save(student);*/
     }
 
-    public EducationalContainsStudentModel save(EducationalContainsStudentModel educationalContain) {
-        return educationalContainRepository.save(educationalContain);
+    public List<StudentModel> findStudentsByInstituitionId(Long educationalUnitId) {
+        return educationalContainsStudentRepository.findStudentsByInstituitionId(educationalUnitId);
     }
 
-    public Optional<EducationalContainsStudentModel> findById(Long id) {
-        return educationalContainRepository.findById(id);
-    }
-
-    public List<EducationalContainsStudentModel> findAll() {
-        return educationalContainRepository.findAll();
-    }
-
-    public void deleteById(Long id) {
-        educationalContainRepository.deleteById(id);
-    }
-
-    public EducationalContainsStudentModel update(EducationalContainsStudentModel educationalContain) {
-        return educationalContainRepository.save(educationalContain);
-    }
+    // delete vai ser a entidade mesmo a deletar. Recebendo student e educational unit
 }
