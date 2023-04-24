@@ -21,4 +21,7 @@ public interface EducationalContainsStudentRepository extends JpaRepository<Educ
     // CLASSES e não às TABELAS lá do banco.
     @Query("SELECT student FROM StudentModel student JOIN EducationalContainsStudentModel relation ON relation.student = student JOIN relation.educationalUnit educationalUnit WHERE  educationalUnit.id = :id")
     List<StudentModel> findStudentsByInstituitionId(@Param("id") Long id);
+
+    @Query("SELECT EducationalUnitModel FROM EducationalUnitModel educationalUnit JOIN EducationalContainsStudentModel relation ON relation.educationalUnit = educationalUnit JOIN relation.student student WHERE  student.id = :id")
+    List<EducationalUnitModel> findEnrolledInstitutionsById(@Param("id") Long id);
 }

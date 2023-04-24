@@ -35,9 +35,13 @@ public class EducationalContainsController {
         return ResponseEntity.status(HttpStatus.OK).body(studentResponse);
     }
 
-    @RequestMapping("/{educationalUnitId}/students")
-    ResponseEntity<List<StudentModel>> findStudentsByInstituition(@PathVariable Long educationalUnitId) {
+    @RequestMapping("/students/{educationalUnitId}")
+    ResponseEntity<List<StudentModel>> findStudentsByInstitution(@PathVariable Long educationalUnitId) {
         return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findStudentsByInstituitionId(educationalUnitId));
     }
 
+    @RequestMapping("/institutions/{studentId}")
+    ResponseEntity<List<StudentModel>> findEnrolledInstitutionsById(@PathVariable Long studentId) {
+        return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findStudentsByInstituitionId(studentId));
+    }
 }

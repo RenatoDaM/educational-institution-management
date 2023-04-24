@@ -54,5 +54,9 @@ public class EducationalContainService {
         return educationalContainsStudentRepository.findStudentsByInstituitionId(educationalUnitId);
     }
 
+    public List<EducationalUnitModel> findEnrolledInstitutionsById(Long id) {
+        return educationalContainsStudentRepository.findEnrolledInstitutionsById(id);
+    }
+
     // delete vai ser a entidade mesmo a deletar. Recebendo student e educational unit
 }
