@@ -50,8 +50,8 @@ public class EducationalContainService {
     return studentRepository.save(student);*/
     }
 
-    public List<StudentModel> findStudentsByInstituitionId(Long educationalUnitId) {
-        return educationalContainsStudentRepository.findStudentsByInstituitionId(educationalUnitId);
+    public List<StudentModel> findStudentsByInstitutionId(Long educationalUnitId) {
+        return educationalContainsStudentRepository.findStudentsByInstitutionId(educationalUnitId);
     }
 
     public List<EducationalUnitModel> findEnrolledInstitutionsById(Long id) {
