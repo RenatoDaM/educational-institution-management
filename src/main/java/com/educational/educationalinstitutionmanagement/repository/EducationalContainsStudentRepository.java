@@ -20,7 +20,7 @@ public interface EducationalContainsStudentRepository extends JpaRepository<Educ
     // Nao usei @ManyToMany então tive que fazer de forma explícita. Lembrar que com JPA você tem que se referir às
     // CLASSES e não às TABELAS lá do banco.
     @Query("SELECT student FROM StudentModel student JOIN EducationalContainsStudentModel relation ON relation.student = student JOIN relation.educationalUnit educationalUnit WHERE  educationalUnit.id = :id")
-    List<StudentModel> findStudentsByInstituitionId(@Param("id") Long id);
+    List<StudentModel> findStudentsByInstitutionId(@Param("id") Long id);
 
     @Query("SELECT EducationalUnitModel FROM EducationalUnitModel educationalUnit JOIN EducationalContainsStudentModel relation ON relation.educationalUnit = educationalUnit JOIN relation.student student WHERE  student.id = :id")
     List<EducationalUnitModel> findEnrolledInstitutionsById(@Param("id") Long id);

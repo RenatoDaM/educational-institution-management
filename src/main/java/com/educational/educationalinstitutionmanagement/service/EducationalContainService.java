@@ -7,11 +7,13 @@ import com.educational.educationalinstitutionmanagement.model.StudentModel;
 import com.educational.educationalinstitutionmanagement.repository.EducationalContainsStudentRepository;
 import com.educational.educationalinstitutionmanagement.repository.EducationalUnitRepository;
 import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
+import com.educational.educationalinstitutionmanagement.response.Response;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EducationalContainService {
@@ -56,6 +58,24 @@ public class EducationalContainService {
 
     public List<EducationalUnitModel> findEnrolledInstitutionsById(Long id) {
         return educationalContainsStudentRepository.findEnrolledInstitutionsById(id);
+    }
+
+    public List<EducationalUnitModel> updateEnrollmentStatus(Long educationalUnitId, Long studentId, String state) {
+        StudentModel studentModel = studentRepository.findById(studentId).get();
+        studentModel.getEducationalUnits().stream().filter(e -> e.getEducationalUnit().getId() == educationalUnitId)
+                .findFirst().get().setState(state);
+        educationalContainsStudentRepository.saveAll(studentModel.getEducationalUnits());
+        return educationalContainsStudentRepository.findEnrolledInstitutionsById(studentModel.getId());
+    }
+
+    public void deleteRelation(Long educationalUnitId, Long studentId) {
+        EducationalContainsStudentId educationalContainsStudentId = new EducationalContainsStudentId();
+        educationalContainsStudentId.setStudentId(studentId);
+        educationalContainsStudentId.setEducationalUnitId(educationalUnitId);
+        EducationalContainsStudentModel relation = new EducationalContainsStudentModel();
+        relation.setId(educationalContainsStudentId);
+
+        educationalContainsStudentRepository.delete(relation);
     }
 
     // delete vai ser a entidade mesmo a deletar. Recebendo student e educational unit

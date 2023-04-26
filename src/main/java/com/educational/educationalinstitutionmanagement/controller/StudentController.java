@@ -28,7 +28,6 @@ public class StudentController {
 
     @GetMapping("/search")
     ResponseEntity<Optional<StudentModel>> getStudent(@RequestParam Long id) {
-        System.out.println(studentService.findById(id).get().getName());
         return ResponseEntity.status(HttpStatus.OK).body(studentService.findById(id));
     }
 

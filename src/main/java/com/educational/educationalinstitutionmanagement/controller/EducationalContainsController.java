@@ -3,6 +3,7 @@ package com.educational.educationalinstitutionmanagement.controller;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.StudentModel;
 import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
+import com.educational.educationalinstitutionmanagement.response.Response;
 import com.educational.educationalinstitutionmanagement.service.EducationalContainService;
 import com.educational.educationalinstitutionmanagement.service.EducationalUnitService;
 import com.educational.educationalinstitutionmanagement.service.StudentService;
@@ -43,5 +44,16 @@ public class EducationalContainsController {
     @RequestMapping("/institutions/{studentId}")
     ResponseEntity<List<StudentModel>> findEnrolledInstitutionsById(@PathVariable Long studentId) {
         return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findStudentsByInstitutionId(studentId));
+    }
+
+    @PutMapping("enrollment/update/{educationalId}/{studentId}")
+    ResponseEntity<List<EducationalUnitModel>> updateEnrollmentState(@PathVariable Long educationalId, @PathVariable Long studentId, @RequestParam String state) {
+        return ResponseEntity.ok(educationalContainService.updateEnrollmentStatus(educationalId, studentId, state));
+    }
+
+    @DeleteMapping("/delete/{educationalId}/{studentId}")
+    ResponseEntity<Response> deleteRelation(@PathVariable Long educationalId, @PathVariable Long studentId) {
+        educationalContainService.deleteRelation(educationalId, studentId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Response(204, "Deleted successfully"));
     }
 }
