@@ -1,7 +1,6 @@
 package com.educational.educationalinstitutionmanagement.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 

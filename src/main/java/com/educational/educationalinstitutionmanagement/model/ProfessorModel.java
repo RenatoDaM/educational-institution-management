@@ -22,8 +22,11 @@ public class ProfessorModel {
     List<CourseModel> courses;
     // vai mapear por "courses"
 
-    @ManyToMany(mappedBy = "educationalUnitModels")
-    List<EducationalContainsProfessorModel> educationalContainsProfessorModels;
+    @ManyToMany
+    @JoinTable(name = "educational_contains_professor",
+            joinColumns = @JoinColumn(name = "professor_id"),
+            inverseJoinColumns = @JoinColumn(name = "educational_unit_id"))
+    List<EducationalUnitModel> educationalUnitModels;
 
     public Long getId() {
         return id;
@@ -57,11 +60,11 @@ public class ProfessorModel {
         this.courses = courses;
     }
 
-    public List<EducationalContainsProfessorModel> getEducationalContainsProfessors() {
-        return educationalContainsProfessorModels;
+    public List<EducationalUnitModel> getEducationalUnitModels() {
+        return educationalUnitModels;
     }
 
-    public void setEducationalContainsProfessors(List<EducationalContainsProfessorModel> educationalContainsProfessorModels) {
-        this.educationalContainsProfessorModels = educationalContainsProfessorModels;
+    public void setEducationalUnitModels(List<EducationalUnitModel> educationalUnitModels) {
+        this.educationalUnitModels = educationalUnitModels;
     }
 }

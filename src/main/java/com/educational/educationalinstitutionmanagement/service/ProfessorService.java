@@ -15,6 +15,9 @@ public class ProfessorService {
     @Autowired
     private ProfessorRepository professorRepository;
 
+    @Autowired
+    private EducationalUnitService educationalUnitService;
+
     public ProfessorModel save(ProfessorModel professor) {
         return professorRepository.save(professor);
     }
@@ -33,5 +36,13 @@ public class ProfessorService {
 
     public ProfessorModel update(ProfessorModel professor) {
         return professorRepository.save(professor);
+    }
+
+    public ProfessorModel registerProfessor(Long unitId, Long professorId) {
+        ProfessorModel professorModel = professorRepository.findById(professorId).get();
+        EducationalUnitModel educationalUnitModel = educationalUnitService.findById(unitId).get();
+        professorModel.getEducationalUnitModels().add(educationalUnitModel);
+        professorRepository.save(professorModel);
+        return professorModel;
     }
 }

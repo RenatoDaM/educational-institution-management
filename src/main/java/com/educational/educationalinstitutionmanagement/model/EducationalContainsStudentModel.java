@@ -1,18 +1,21 @@
 package com.educational.educationalinstitutionmanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "educational_contains_student")
 public class EducationalContainsStudentModel {
     @EmbeddedId
+    @JsonIgnore
     EducationalContainsStudentId id;
+
     @ManyToOne
     @MapsId("educationalUnitId")
     @JoinColumn(name = "educational_unit_id")
     private EducationalUnitModel educationalUnit;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("studentId")
     @JoinColumn(name = "student_id")

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,7 +31,6 @@ public class StudentModel implements Serializable {
     CurriculumModel curriculumModel;
 
     @OneToMany(mappedBy = "student")
-    @JsonIgnore
     Set<EducationalContainsStudentModel> educationalUnits;
 
     public Long getId() {

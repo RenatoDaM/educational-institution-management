@@ -1,19 +1,13 @@
 package com.educational.educationalinstitutionmanagement.service;
 
-import com.educational.educationalinstitutionmanagement.model.EducationalContainsStudentId;
-import com.educational.educationalinstitutionmanagement.model.EducationalContainsStudentModel;
-import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
-import com.educational.educationalinstitutionmanagement.model.StudentModel;
+import com.educational.educationalinstitutionmanagement.model.*;
 import com.educational.educationalinstitutionmanagement.repository.EducationalContainsStudentRepository;
 import com.educational.educationalinstitutionmanagement.repository.EducationalUnitRepository;
 import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
-import com.educational.educationalinstitutionmanagement.response.Response;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EducationalContainService {
@@ -60,10 +54,10 @@ public class EducationalContainService {
         return educationalContainsStudentRepository.findEnrolledInstitutionsById(id);
     }
 
-    public List<EducationalUnitModel> updateEnrollmentStatus(Long educationalUnitId, Long studentId, String state) {
+    public List<EducationalUnitModel> updateEnrollmentStatus(Long educationalUnitId, Long studentId, EnrollmentStatusEnum status) {
         StudentModel studentModel = studentRepository.findById(studentId).get();
         studentModel.getEducationalUnits().stream().filter(e -> e.getEducationalUnit().getId() == educationalUnitId)
-                .findFirst().get().setState(state);
+                .findFirst().get().setState(status.getStatus());
         educationalContainsStudentRepository.saveAll(studentModel.getEducationalUnits());
         return educationalContainsStudentRepository.findEnrolledInstitutionsById(studentModel.getId());
     }
