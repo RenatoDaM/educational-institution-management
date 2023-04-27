@@ -3,6 +3,7 @@ package com.educational.educationalinstitutionmanagement.service;
 import com.educational.educationalinstitutionmanagement.dto.StudentDTO;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.ProfessorModel;
+import com.educational.educationalinstitutionmanagement.repository.EducationalUnitRepository;
 import com.educational.educationalinstitutionmanagement.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,8 @@ public class ProfessorService {
 
     @Autowired
     private EducationalUnitService educationalUnitService;
+    @Autowired
+    private EducationalUnitRepository educationalUnitRepository;
 
     public ProfessorModel save(ProfessorModel professor) {
         return professorRepository.save(professor);
@@ -53,5 +56,10 @@ public class ProfessorService {
         return educationalUnitModels;
     }
 
-
+    public void deleteFromUnit(Long unitId, Long professorId) {
+        ProfessorModel professorModel = professorRepository.findById(professorId).get();
+        EducationalUnitModel educationalUnitModel = educationalUnitRepository.findById(unitId).get();
+        professorModel.getEducationalUnitModels().remove(educationalUnitModel);
+        professorRepository.save(professorModel);
+    }
 }

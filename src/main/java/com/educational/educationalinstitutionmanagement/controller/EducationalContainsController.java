@@ -64,7 +64,7 @@ public class EducationalContainsController {
         return ResponseEntity.ok(educationalContainService.updateEnrollmentStatus(unitId, studentId, status));
     }
 
-    @DeleteMapping("/delete/{unitId}/{studentId}")
+    @DeleteMapping("/delete/student-from-institution/{unitId}/{studentId}")
     ResponseEntity<Response> deleteRelation(@PathVariable Long unitId, @PathVariable Long studentId) {
         educationalContainService.deleteRelation(unitId, studentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Response(204, "Deleted successfully"));
@@ -82,6 +82,9 @@ public class EducationalContainsController {
         return ResponseEntity.status(HttpStatus.OK).body(professorService.getAllEnrolledUnits(professorId));
     }
 
-
-
+    @DeleteMapping("/delete/professor-from-institution/{unitId}/{professorId}")
+    ResponseEntity<Response> deleteProfessorRelation(@PathVariable Long unitId, @PathVariable Long professorId) {
+        professorService.deleteFromUnit(unitId, professorId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Response(204, "Deleted successfully"));
+    }
 }
