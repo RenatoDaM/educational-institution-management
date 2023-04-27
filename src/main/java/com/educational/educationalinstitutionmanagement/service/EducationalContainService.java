@@ -1,13 +1,18 @@
 package com.educational.educationalinstitutionmanagement.service;
 
+import com.educational.educationalinstitutionmanagement.dto.StudentDTO;
 import com.educational.educationalinstitutionmanagement.model.*;
 import com.educational.educationalinstitutionmanagement.repository.EducationalContainsStudentRepository;
 import com.educational.educationalinstitutionmanagement.repository.EducationalUnitRepository;
 import com.educational.educationalinstitutionmanagement.repository.StudentRepository;
+import com.educational.educationalinstitutionmanagement.util.mapstruct.StudentMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EducationalContainService {
@@ -18,6 +23,9 @@ public class EducationalContainService {
     private StudentRepository studentRepository;
     @Autowired
     private EducationalUnitRepository educationalUnitRepository;
+
+
+
 
     @Transactional
     public StudentModel registerStudentInUnit(EducationalUnitModel educationalUnitModel, StudentModel studentModel) {
@@ -70,6 +78,13 @@ public class EducationalContainService {
         relation.setId(educationalContainsStudentId);
 
         educationalContainsStudentRepository.delete(relation);
+    }
+
+    public List<StudentDTO> getAllStudentsResume(Long unitId) {
+        List<StudentModel> students = educationalContainsStudentRepository.findStudentsByInstitutionId(unitId);
+        List<StudentDTO> studentsDTO = new ArrayList<>();
+        students.stream().forEach(e -> studentsDTO.add(StudentMapper.INSTANCE.studentToStudentDTO(e)));
+        return studentsDTO;
     }
 
     // delete vai ser a entidade mesmo a deletar. Recebendo student e educational unit

@@ -1,5 +1,6 @@
 package com.educational.educationalinstitutionmanagement.controller;
 
+import com.educational.educationalinstitutionmanagement.dto.StudentDTO;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.EnrollmentStatusEnum;
 import com.educational.educationalinstitutionmanagement.model.ProfessorModel;
@@ -31,6 +32,8 @@ public class EducationalContainsController {
     @Autowired
     ProfessorService professorService;
 
+    // STUDENT
+
     @PostMapping("/{unitId}/student/{studentId}")
     ResponseEntity<StudentModel> registerStudent(@PathVariable Long unitId, @PathVariable Long studentId) {
         EducationalUnitModel educationalUnitModel = educationalUnitService.findById(unitId).get();
@@ -44,9 +47,16 @@ public class EducationalContainsController {
         return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findStudentsByInstitutionId(unitId));
     }
 
+    // Vai retornar uma lista de estudantes apenas com informações básicas (nome, ra, etc)
+    @RequestMapping("/students/resume/{unitId}")
+    ResponseEntity<List<StudentDTO>> findStudentsByInstitutionResume(@PathVariable Long unitId) {
+        return ResponseEntity.ok().body(educationalContainService.getAllStudentsResume(unitId));
+    }
+
+
     @RequestMapping("/institutions/{studentId}")
-    ResponseEntity<List<StudentModel>> findEnrolledInstitutionsById(@PathVariable Long studentId) {
-        return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findStudentsByInstitutionId(studentId));
+    ResponseEntity<List<EducationalUnitModel>> findEnrolledInstitutionsById(@PathVariable Long studentId) {
+        return ResponseEntity.status(HttpStatus.OK).body(educationalContainService.findEnrolledInstitutionsById(studentId));
     }
 
     @PutMapping("enrollment/update/{unitId}/{studentId}")
@@ -60,8 +70,18 @@ public class EducationalContainsController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new Response(204, "Deleted successfully"));
     }
 
+    // PROFESSOR
+
     @PostMapping("/{unitId}/professor/{professorId}")
     ResponseEntity<ProfessorModel> registerProfessor(@PathVariable Long unitId, @PathVariable Long professorId) {
         return ResponseEntity.status(HttpStatus.OK).body(professorService.registerProfessor(unitId, professorId));
     }
+
+    @GetMapping("/{unitId}/professor")
+    ResponseEntity<List<EducationalUnitModel>> getAllEnrolledUnits(@PathVariable Long professorId) {
+        return ResponseEntity.status(HttpStatus.OK).body(professorService.getAllEnrolledUnits(professorId));
+    }
+
+
+
 }

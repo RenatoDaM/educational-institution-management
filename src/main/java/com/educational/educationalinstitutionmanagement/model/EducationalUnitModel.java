@@ -19,6 +19,7 @@ public class EducationalUnitModel implements Serializable {
     String state;
     String city;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "educationalUnit")
     Set<EducationalContainsStudentModel> students;
 

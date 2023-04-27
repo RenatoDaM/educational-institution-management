@@ -1,11 +1,9 @@
 package com.educational.educationalinstitutionmanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +14,7 @@ public class StudentModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-    LocalDate birthDay;
+    LocalDate birthDate;
     @Column(unique = true)
     String cpf;
     @Column(unique = true)
@@ -73,12 +71,12 @@ public class StudentModel implements Serializable {
         this.enrollment = enrollment;
     }
 
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthDay(LocalDate birthDay) {
-        this.birthDay = birthDay;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public List<CourseHistoryModel> getCourseHistoryModel() {

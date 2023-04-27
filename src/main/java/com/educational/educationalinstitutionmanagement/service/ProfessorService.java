@@ -1,5 +1,6 @@
 package com.educational.educationalinstitutionmanagement.service;
 
+import com.educational.educationalinstitutionmanagement.dto.StudentDTO;
 import com.educational.educationalinstitutionmanagement.model.EducationalUnitModel;
 import com.educational.educationalinstitutionmanagement.model.ProfessorModel;
 import com.educational.educationalinstitutionmanagement.repository.ProfessorRepository;
@@ -45,4 +46,12 @@ public class ProfessorService {
         professorRepository.save(professorModel);
         return professorModel;
     }
+
+    public List<EducationalUnitModel> getAllEnrolledUnits(Long professorId) {
+        ProfessorModel professorModel = professorRepository.findById(professorId).get();
+        List<EducationalUnitModel> educationalUnitModels = professorModel.getEducationalUnitModels();
+        return educationalUnitModels;
+    }
+
+
 }
