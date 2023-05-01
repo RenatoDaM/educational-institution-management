@@ -1,0 +1,35 @@
+package com.educational.service;
+
+import com.educational.model.DegreeProgramModel;
+import com.educational.repository.DegreeProgramRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+@Service
+public class DegreeProgramService {
+
+    @Autowired
+    private DegreeProgramRepository degreeProgramRepository;
+
+    public DegreeProgramModel save(DegreeProgramModel degreeProgram) {
+        return degreeProgramRepository.save(degreeProgram);
+    }
+
+    public Optional<DegreeProgramModel> findById(Long id) {
+        return degreeProgramRepository.findById(id);
+    }
+
+    public List<DegreeProgramModel> findAll() {
+        return degreeProgramRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        degreeProgramRepository.deleteById(id);
+    }
+
+    public DegreeProgramModel update(DegreeProgramModel degreeProgram) {
+        return degreeProgramRepository.save(degreeProgram);
+    }
+}
