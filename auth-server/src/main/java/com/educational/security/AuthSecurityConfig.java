@@ -43,7 +43,7 @@ public class AuthSecurityConfig {
     }
 
     @Bean
-    RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
+    public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
         return new InMemoryRegisteredClientRepository();
     }
 }
