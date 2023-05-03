@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
         System.out.println("Hello world!");
-        String password = "123456"; // substitua pela sua senha
+        String password = "123456";
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
