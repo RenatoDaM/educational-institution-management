@@ -24,10 +24,10 @@ public class JPAUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         final var user = userRepository.findByEmail(email);
 
-        final var simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + user.getType().name());
+        final var simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + user.get().getType().name());
         return new User(
-                user.getEmail(),
-                user.getPassword(),
+                user.get().getEmail(),
+                user.get().getPassword(),
                 List.of(simpleGrantedAuthority)
         );
     }

@@ -1,5 +1,7 @@
 package com.educational.security;
 
+import com.educational.domain.UserModel;
+import com.educational.repository.UserRepository;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -12,6 +14,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,6 +30,8 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -36,6 +41,8 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @EnableWebSecurity
@@ -84,6 +91,33 @@ public class AuthSecurityConfig {
 
 
     @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtEncodingContextOAuth2TokenCustomizer(UserRepository userRepository) {
+        return (context -> {
+            Authentication authentication = context.getPrincipal();
+
+            if (authentication.getPrincipal() instanceof User) {
+                final User user = (User) authentication.getPrincipal();
+                // Como não estou usando um custom User e sim um User genérico do spring security,
+                // é necessário chamar o repository, pois dele que eu tiro as informações pra preencher
+                // corretamente o User.
+
+                final UserModel userModel = userRepository.findByEmail(user.getUsername()).orElseThrow();
+
+                // agora começa as customizações:
+                Set<String> authorities = new HashSet<>();
+                user.getAuthorities().forEach(authority -> authorities.add(authority.toString()));
+
+                // Usei o String.valueOf para evitar erros de serialização do jackson
+                // segundo um cara no youtube.
+                context.getClaims().claim("user_id", String.valueOf(userModel.getId()));
+                context.getClaims().claim("user_fullname", userModel.getName());
+                context.getClaims().claim("authorities", authorities);
+
+            }
+        });
+    }
+
+    @Bean
     public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
 
         RegisteredClient registeredClient = RegisteredClient.withId("1")
@@ -109,6 +143,7 @@ public class AuthSecurityConfig {
                 // nao existe essa uri, é apenas simulando um frontend.
                 .redirectUri("http://localhost:3000/authorized")
                 .redirectUri("https://oidcdebugger.com/debug")
+                .redirectUri("https://oauth.pstmn.io/v1/callback")
                 .scope("myuser:read")
                 .scope("myuser:write")
                 .scope("posts:write")
