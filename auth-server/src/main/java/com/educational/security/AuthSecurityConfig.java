@@ -84,18 +84,6 @@ public class AuthSecurityConfig {
 
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(userDetails);
-    }
-
-
-    @Bean
     public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
 
         RegisteredClient registeredClient = RegisteredClient.withId("1")
@@ -111,8 +99,31 @@ public class AuthSecurityConfig {
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .build();
 
+        RegisteredClient awblogClient = RegisteredClient
+                .withId("2")
+                .clientId("awblog")
+                .clientSecret(passwordEncoder.encode("123456"))
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                // nao existe essa uri, é apenas simulando um frontend.
+                .redirectUri("http://localhost:3000/authorized")
+                .redirectUri("https://oidcdebugger.com/debug")
+                .scope("myuser:read")
+                .scope("myuser:write")
+                .scope("posts:write")
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofMinutes(15))
+                        .refreshTokenTimeToLive(Duration.ofDays(1))
+                        .reuseRefreshTokens(false)
+                        .build())
+                .clientSettings(ClientSettings.builder()
+                        .requireAuthorizationConsent(true)
+                        .build())
+                .build();
 
-        return new InMemoryRegisteredClientRepository(Arrays.asList(registeredClient));
+
+        return new InMemoryRegisteredClientRepository(Arrays.asList(registeredClient, awblogClient));
     }
 
     @Bean

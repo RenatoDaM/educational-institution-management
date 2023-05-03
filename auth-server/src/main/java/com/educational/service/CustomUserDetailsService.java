@@ -12,12 +12,8 @@ import java.util.List;
 
 @Transactional
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService {
     @Autowired
     UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
 }
