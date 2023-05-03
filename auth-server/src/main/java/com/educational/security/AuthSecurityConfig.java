@@ -5,7 +5,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -16,9 +15,9 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
@@ -27,20 +26,22 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
-
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.UUID;
 
 @EnableWebSecurity
 @Configuration
 public class AuthSecurityConfig {
+
 
     @Bean
     @Order(1)
@@ -95,24 +96,23 @@ public class AuthSecurityConfig {
 
 
     @Bean
-    public RegisteredClientRepository registeredClientRepository() {
-        RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("id-app")
-                .clientSecret("123456")
+    public RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder) {
+
+        RegisteredClient registeredClient = RegisteredClient.withId("1")
+                .clientId("awuser")
+                .clientSecret(passwordEncoder.encode("123456"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("http://127.0.0.1:9000/login/oauth2/code/messaging-client-oidc")
-                .redirectUri("http://127.0.0.1:9000/authorized")
-                .scope(OidcScopes.OPENID)
-                .scope(OidcScopes.PROFILE)
-                .scope("message.read")
-                .scope("message.write")
-                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .scope("users:read")
+                .scope("users:write")
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofMinutes(5))
+                        .build())
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .build();
 
-        return new InMemoryRegisteredClientRepository(registeredClient);
+
+        return new InMemoryRegisteredClientRepository(Arrays.asList(registeredClient));
     }
 
     @Bean
@@ -151,4 +151,25 @@ public class AuthSecurityConfig {
     }
 
 
+
+
+    /*
+    dando load em chaves pre setadas:
+
+    @Bean
+    public JWKSet jwkSet(AuthProperties authProperties) throws Exception {
+        final var jksProperties = authProperties.getJks();
+        final String jksPath = jksProperties.getPath();
+        final InputStream inputStream = new ClassPathResource(jksPath).getInputStream();
+
+        final KeyStore keyStore = KeyStore.getInstance("JKS");
+        keyStore.load(inputStream, jksProperties.getStorepass().toCharArray());
+
+        RSAKey rsaKey = RSAKey.load(keyStore,
+                jksProperties.getAlias(),
+                jksProperties.getKeypass().toCharArray());
+
+        return new JWKSet(rsaKey);
+    }
+    */
 }

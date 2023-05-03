@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8081
 
 spring:
   datasource:
@@ -16,3 +16,23 @@ spring:
         jdbc:
           lob:
             non-contextual_creation: true
+  security:
+    oauth2:
+      client:
+        registration:
+          local:
+            client-id: awuser
+            client-secret: 123456
+        provider:
+          local:
+            issuer-uri: http://localhost:8081
+aw:
+  auth:
+    provider-uri: "http://localhost:8081"
+    jks:
+      keypass: 123456
+      storepass: 123456
+      alias: awblog
+      path: keystore/awblog.jks
+
+
